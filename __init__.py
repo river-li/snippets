@@ -46,8 +46,18 @@ Settings().register_setting("snippets.indentation", """
     }
     """)
 
+defaultPath = os.path.abspath(os.path.join(user_plugin_path(), "..", "snippets"))
+Settings().register_setting("snippets.snippetPath", """
+    {
+        "title" : "Path to the snippets",
+        "type" : "string",
+        "default" : "%s",
+        "description" : "Directory path of snippets",
+        "ignore" : ["SettingsProjectScope", "SettingsResourceScope"]
+    }
+    """ % defaultPath)
 
-snippetPath = os.path.realpath(os.path.join(user_plugin_path(), "..", "snippets"))
+snippetPath = Settings().get_string("snippets.snippetPath")
 try:
     if not os.path.exists(snippetPath):
         os.mkdir(snippetPath)
